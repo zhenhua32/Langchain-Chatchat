@@ -208,6 +208,7 @@ def create_model_worker_app(log_level: str = "INFO", **kwargs) -> FastAPI:
                 groupsize=args.awq_groupsize,
             )
 
+            # 可以看下加载模型的参数
             worker = ModelWorker(
                 controller_addr=args.controller_address,
                 worker_addr=args.worker_address,
