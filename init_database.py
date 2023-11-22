@@ -103,6 +103,7 @@ if __name__ == "__main__":
         print("database talbes reseted")
 
     if args.recreate_vs:
+        # TODO: 应该看看这里, 跑不起来. 错误是 fatal error - Internal error: TP_NUM_C_BUFS too small: 50
         create_tables()
         print("recreating all vector stores")
         folder2db(kb_names=args.kb_name, mode="recreate_vs", embed_model=args.embed_model)

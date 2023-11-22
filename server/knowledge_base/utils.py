@@ -369,6 +369,9 @@ def files2docs_in_thread(
         try:
             return True, (file.kb_name, file.filename, file.file2text(**kwargs))
         except Exception as e:
+            # TODO: 这里报错 fatal error - Internal error: TP_NUM_C_BUFS too small: 50
+            logger.info(f"===errror: {e}")
+            raise e
             msg = f"从文件 {file.kb_name}/{file.filename} 加载文档时出错：{e}"
             logger.error(f'{e.__class__.__name__}: {msg}',
                          exc_info=e if log_verbose else None)

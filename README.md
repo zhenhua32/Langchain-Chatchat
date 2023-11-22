@@ -1,3 +1,6 @@
+个人文档参考[这里](./docs/心得.md)
+---
+
 ![](img/logo-long-chatchat-trans-v2.png)
 
 
