@@ -1,0 +1,19 @@
+<mxfile host="app.diagrams.net" modified="2023-11-26T02:18:26.310Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="gKIbZG857EHZcy8CJd_G" version="22.1.4" type="github">
+  <diagram name="第 1 页" id="tyLjIMTKeEUc38fE4QXz">
+    <mxGraphModel dx="1587" dy="1834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-bjUIWqtexf8osAAXRmr-1" value="create_tables" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-2" value="&lt;font color=&quot;#000000&quot;&gt;init_database.py 中包含了很多数据库相关的操作. 主要有创建数据库, 重置, 删除, 全量更新, 增量更新等.&lt;br&gt;&lt;br&gt;默认是使用 sqlite 作为数据库的&lt;br&gt;&lt;/font&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#999999;strokeWidth=1;fillColor=#FFFFFF;fontColor=#6C767D;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="-50" width="420" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-3" value="folder2db" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
