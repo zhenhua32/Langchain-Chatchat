@@ -11,9 +11,12 @@ from typing import List, Dict, Optional
 
 
 class FaissKBService(KBService):
+    """
+    基于 Faiss 的向量服务类
+    """
     vs_path: str
     kb_path: str
-    vector_name: str = None
+    vector_name: str = None  # 如果没设置, 就是嵌入模型的名字
  
     def vs_type(self) -> str:
         return SupportedVSType.FAISS
@@ -22,9 +25,13 @@ class FaissKBService(KBService):
         return get_vs_path(self.kb_name, self.vector_name)
 
     def get_kb_path(self):
+        """获取知识库路径"""
         return get_kb_path(self.kb_name)
 
     def load_vector_store(self) -> ThreadSafeFaiss:
+        """
+        加载向量库
+        """
         return kb_faiss_pool.load_vector_store(kb_name=self.kb_name,
                                                vector_name=self.vector_name,
                                                embed_model=self.embed_model)
@@ -37,11 +44,17 @@ class FaissKBService(KBService):
             return vs.docstore._dict.get(id)
 
     def do_init(self):
+        """
+        初始化, 就是设置三个类变量的值
+        """
         self.vector_name = self.vector_name or self.embed_model
         self.kb_path = self.get_kb_path()
         self.vs_path = self.get_vs_path()
 
     def do_create_kb(self):
+        """
+        创建向量数据库
+        """
         if not os.path.exists(self.vs_path):
             os.makedirs(self.vs_path)
         self.load_vector_store()

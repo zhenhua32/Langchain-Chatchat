@@ -69,21 +69,30 @@ class KBFaissPool(_FaissPool):
             embed_model: str = EMBEDDING_MODEL,
             embed_device: str = embedding_device(),
     ) -> ThreadSafeFaiss:
+        """
+        加载向量库
+        """
         self.atomic.acquire()
         vector_name = vector_name or embed_model
-        cache = self.get((kb_name, vector_name)) # 用元组比拼接字符串好一些
+        cache = self.get((kb_name, vector_name))  # 用元组比拼接字符串好一些
         if cache is None:
+            # 主要看没缓存的时候, 怎么初始化的
             item = ThreadSafeFaiss((kb_name, vector_name), pool=self)
+            # 将这个实例保存到缓存池中
             self.set((kb_name, vector_name), item)
+
+            # 获取锁
             with item.acquire(msg="初始化"):
                 self.atomic.release()
                 logger.info(f"loading vector store in '{kb_name}/vector_store/{vector_name}' from disk.")
                 vs_path = get_vs_path(kb_name, vector_name)
 
                 if os.path.isfile(os.path.join(vs_path, "index.faiss")):
+                    # 加载嵌入模型
                     embeddings = self.load_kb_embeddings(kb_name=kb_name, embed_device=embed_device, default_embed_model=embed_model)
                     vector_store = FAISS.load_local(vs_path, embeddings, normalize_L2=True)
                 elif create:
+                    # 当选项 create 为 True 时, 就新建一个
                     # create an empty vector store
                     if not os.path.exists(vs_path):
                         os.makedirs(vs_path)
@@ -91,10 +100,14 @@ class KBFaissPool(_FaissPool):
                     vector_store.save_local(vs_path)
                 else:
                     raise RuntimeError(f"knowledge base {kb_name} not exist.")
+                # 更新 obj 属性为 vector_store
                 item.obj = vector_store
+                # 更新标记为加载完成
                 item.finish_loading()
         else:
             self.atomic.release()
+
+        # 从缓存中获取
         return self.get((kb_name, vector_name))
 
 

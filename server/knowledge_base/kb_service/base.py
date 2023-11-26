@@ -41,6 +41,7 @@ def normalize(embeddings: List[List[float]]) -> np.ndarray:
 
 
 class SupportedVSType:
+    """支持的向量库类型"""
     FAISS = 'faiss'
     MILVUS = 'milvus'
     DEFAULT = 'default'
@@ -78,6 +79,7 @@ class KBService(ABC):
         if not os.path.exists(self.doc_path):
             os.makedirs(self.doc_path)
         self.do_create_kb()
+        # 将知识库信息存入数据库
         status = add_kb_to_db(self.kb_name, self.kb_info, self.vs_type(), self.embed_model)
         return status
 
@@ -199,6 +201,7 @@ class KBService(ABC):
         return list_kbs_from_db()
 
     def exists(self, kb_name: str = None):
+        """查表检查是否存在知识库"""
         kb_name = kb_name or self.kb_name
         return kb_exists(kb_name)
 
@@ -254,6 +257,9 @@ class KBService(ABC):
 
 
 class KBServiceFactory:
+    """
+    工厂模式，根据配置文件中的向量库类型，返回对应的向量库服务
+    """
 
     @staticmethod
     def get_service(kb_name: str,

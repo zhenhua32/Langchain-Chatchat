@@ -5,7 +5,7 @@ from server.db.base import Base
 
 class KnowledgeBaseModel(Base):
     """
-    知识库模型
+    知识库模型, 这是个数据表定义
     """
     __tablename__ = 'knowledge_base'
     id = Column(Integer, primary_key=True, autoincrement=True, comment='知识库ID')

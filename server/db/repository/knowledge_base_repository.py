@@ -25,6 +25,9 @@ def list_kbs_from_db(session, min_file_count: int = -1):
 
 @with_session
 def kb_exists(session, kb_name):
+    """
+    检查 KnowledgeBaseModel 表中是否存在 kb_name
+    """
     kb = session.query(KnowledgeBaseModel).filter_by(kb_name=kb_name).first()
     status = True if kb else False
     return status
