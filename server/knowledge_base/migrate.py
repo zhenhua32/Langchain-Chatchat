@@ -19,10 +19,16 @@ from typing import Literal, List
 
 
 def create_tables():
+    """
+    创建数据库表
+    """
     Base.metadata.create_all(bind=engine)
 
 
 def reset_tables():
+    """
+    重置数据库表
+    """
     Base.metadata.drop_all(bind=engine)
     create_tables()
 
@@ -112,6 +118,7 @@ def folder2db(
                 print(result)
 
     kb_names = kb_names or list_kbs_from_folder()
+    # 遍历所有的目录
     for kb_name in kb_names:
         kb = KBServiceFactory.get_service(kb_name, vs_type, embed_model)
         if not kb.exists():

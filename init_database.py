@@ -16,6 +16,7 @@ from server.knowledge_base.migrate import (
     prune_folder_files,
 )
 from configs.model_config import NLTK_DATA_PATH, EMBEDDING_MODEL
+
 nltk.data.path = [NLTK_DATA_PATH] + nltk.data.path
 
 
@@ -92,7 +93,13 @@ if __name__ == "__main__":
         default=[],
         help=("specify knowledge base names to operate on. default is all folders exist in KB_ROOT_PATH."),
     )
-    parser.add_argument("-e", "--embed-model", type=str, default=EMBEDDING_MODEL, help=("specify embeddings model."))
+    parser.add_argument(
+        "-e",
+        "--embed-model",
+        type=str,
+        default=EMBEDDING_MODEL,
+        help=("specify embeddings model."),
+    )
 
     args = parser.parse_args()
     start_time = datetime.now()

@@ -31,22 +31,37 @@ def validate_kb_name(knowledge_base_id: str) -> bool:
 
 
 def get_kb_path(knowledge_base_name: str):
+    """
+    获取 knowledge_base_name 对应的知识库目录路径
+    """
     return os.path.join(KB_ROOT_PATH, knowledge_base_name)
 
 
 def get_doc_path(knowledge_base_name: str):
+    """
+    获取 knowledge_base_name 下的 content 目录
+    """
     return os.path.join(get_kb_path(knowledge_base_name), "content")
 
 
 def get_vs_path(knowledge_base_name: str, vector_name: str):
+    """
+    获取 knowledge_base_name 下的 vector_store 目录下的 vector_name 目录
+    """
     return os.path.join(get_kb_path(knowledge_base_name), "vector_store", vector_name)
 
 
 def get_file_path(knowledge_base_name: str, doc_name: str):
+    """
+    获取 knowledge_base_name 下的 content 目录下的 doc_name 文件路径
+    """
     return os.path.join(get_doc_path(knowledge_base_name), doc_name)
 
 
 def list_kbs_from_folder():
+    """
+    列出知识库目录下的所有文件夹
+    """
     return [f for f in os.listdir(KB_ROOT_PATH)
             if os.path.isdir(os.path.join(KB_ROOT_PATH, f))]
 

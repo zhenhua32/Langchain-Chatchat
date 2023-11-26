@@ -8,15 +8,22 @@ from langchain.schema import Document
 import os
 from langchain.schema import Document
 
+
 class ThreadSafeFaiss(ThreadSafeObject):
+    """
+    self._obj 是一个 FAISS 实例
+    """
+
     def __repr__(self) -> str:
         cls = type(self).__name__
         return f"<{cls}: key: {self.key}, obj: {self._obj}, docs_count: {self.docs_count()}>"
 
     def docs_count(self) -> int:
+        """获取向量库中文档的数量"""
         return len(self._obj.docstore._dict)
 
     def save(self, path: str, create_path: bool = True):
+        """保存向量库到磁盘"""
         with self.acquire():
             if not os.path.isdir(path) and create_path:
                 os.makedirs(path)
@@ -25,6 +32,7 @@ class ThreadSafeFaiss(ThreadSafeObject):
         return ret
 
     def clear(self):
+        """清空向量库"""
         ret = []
         with self.acquire():
             ids = list(self._obj.docstore._dict.keys())
@@ -41,9 +49,13 @@ class _FaissPool(CachePool):
         embed_model: str = EMBEDDING_MODEL,
         embed_device: str = embedding_device(),
     ) -> FAISS:
+        """
+        创建新的向量库
+        """
         # TODO: 整个Embeddings加载逻辑有些混乱，待清理
         # create an empty vector store
         embeddings = EmbeddingsFunAdapter(embed_model)
+        # 先用一个 init 文档初始化向量库, 然后再删除
         doc = Document(page_content="init", metadata={})
         vector_store = FAISS.from_documents([doc], embeddings, normalize_L2=True)
         ids = list(vector_store.docstore._dict.keys())
@@ -51,10 +63,12 @@ class _FaissPool(CachePool):
         return vector_store
 
     def save_vector_store(self, kb_name: str, path: str=None):
+        """保存向量库到磁盘"""
         if cache := self.get(kb_name):
             return cache.save(path)
 
     def unload_vector_store(self, kb_name: str):
+        """释放向量库, 从缓存中删除"""
         if cache := self.get(kb_name):
             self.pop(kb_name)
             logger.info(f"成功释放向量库：{kb_name}")
