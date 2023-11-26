@@ -1,17 +1,107 @@
-<mxfile host="app.diagrams.net" modified="2023-11-26T02:18:26.310Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="gKIbZG857EHZcy8CJd_G" version="22.1.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-26T04:31:34.246Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="2AF70-waANTJDlqPBmxc" version="22.1.4" type="github">
   <diagram name="第 1 页" id="tyLjIMTKeEUc38fE4QXz">
     <mxGraphModel dx="1587" dy="1834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="-bjUIWqtexf8osAAXRmr-1" value="create_tables" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="120" y="190" width="120" height="60" as="geometry" />
+          <mxGeometry x="80" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-2" target="-bjUIWqtexf8osAAXRmr-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-2" target="-bjUIWqtexf8osAAXRmr-3">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="-bjUIWqtexf8osAAXRmr-2" value="&lt;font color=&quot;#000000&quot;&gt;init_database.py 中包含了很多数据库相关的操作. 主要有创建数据库, 重置, 删除, 全量更新, 增量更新等.&lt;br&gt;&lt;br&gt;默认是使用 sqlite 作为数据库的&lt;br&gt;&lt;/font&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#999999;strokeWidth=1;fillColor=#FFFFFF;fontColor=#6C767D;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;fontSize=14;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="60" y="-50" width="420" height="160" as="geometry" />
         </mxCell>
         <mxCell id="-bjUIWqtexf8osAAXRmr-3" value="folder2db" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="320" y="190" width="120" height="60" as="geometry" />
+          <mxGeometry x="294" y="190" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-7" value="FaissKBService" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="110" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-8" target="-bjUIWqtexf8osAAXRmr-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-8" value="KBService" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="-50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-10" target="-bjUIWqtexf8osAAXRmr-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-26" value="子类" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="-bjUIWqtexf8osAAXRmr-12">
+          <mxGeometry x="-0.2229" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-10" value="Base" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-11" value="KnowledgeBaseModel" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="585" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-13" target="-bjUIWqtexf8osAAXRmr-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-27" value="子类" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="-bjUIWqtexf8osAAXRmr-18">
+          <mxGeometry x="-0.1429" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-13" value="ThreadSafeObject" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-14" value="ThreadSafeFaiss" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="585" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-15" target="-bjUIWqtexf8osAAXRmr-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-28" value="子类" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="-bjUIWqtexf8osAAXRmr-19">
+          <mxGeometry x="-0.14" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-15" value="CachePool" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="420" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-16" target="-bjUIWqtexf8osAAXRmr-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-29" value="子类" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="-bjUIWqtexf8osAAXRmr-20">
+          <mxGeometry x="-0.125" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-16" value="_FaissPool" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="580" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-17" target="-bjUIWqtexf8osAAXRmr-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-30" value="子类" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="-bjUIWqtexf8osAAXRmr-24">
+          <mxGeometry x="-0.1714" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-31" value="方法" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="-bjUIWqtexf8osAAXRmr-24">
+          <mxGeometry x="-0.2114" y="6" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-17" value="KBFaissPool" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="720" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-21" value="&lt;p&gt;&lt;font color=&quot;#000000&quot;&gt;CachePool 和&amp;nbsp;ThreadSafeObject 是一起使用的&lt;/font&gt;&lt;/p&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#999999;strokeWidth=1;fillColor=#FFFFFF;fontColor=#6C767D;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="580" y="300" width="430" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-23" value="load_vector_store" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="770" y="840" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-25" value="&lt;font color=&quot;#000000&quot;&gt;我应该定义一下如何使用这些图形, 这样能更清晰规范.&lt;/font&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#999999;strokeWidth=1;fillColor=#FFFFFF;fontColor=#6C767D;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="80" y="-370" width="850" height="240" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
