@@ -465,6 +465,9 @@ def run_webui(started_event: mp.Event = None, run_mode: str = None):
 
 
 def parse_args() -> argparse.ArgumentParser:
+    """
+    命令行参数解析
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-a",
@@ -556,6 +559,9 @@ def parse_args() -> argparse.ArgumentParser:
 
 
 def dump_server_info(after_start=False, args=None):
+    """
+    打印服务端信息
+    """
     import platform
     import langchain
     import fastchat
@@ -594,9 +600,13 @@ def dump_server_info(after_start=False, args=None):
 
 
 async def start_main_server():
+    """
+    居然还是个协程
+    """
     import time
     import signal
 
+    # 注册信号处理函数
     def handler(signalname):
         """
         Python 3.9 has `signal.strsignal(signalnum)` so this closure would not be needed.
@@ -617,6 +627,7 @@ async def start_main_server():
     queue = manager.Queue()
     args, parser = parse_args()
 
+    # 全要
     if args.all_webui:
         args.openai_api = True
         args.model_worker = True
@@ -624,6 +635,7 @@ async def start_main_server():
         args.api_worker = True
         args.webui = True
 
+    # 除了 webui 都要
     elif args.all_api:
         args.openai_api = True
         args.model_worker = True
