@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-26T04:31:34.246Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="2AF70-waANTJDlqPBmxc" version="22.1.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-26T04:38:51.842Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="BGwg2VZIVQusPUCSWQ1Q" version="22.1.4" type="github">
   <diagram name="第 1 页" id="tyLjIMTKeEUc38fE4QXz">
     <mxGraphModel dx="1587" dy="1834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -102,6 +102,9 @@
         </mxCell>
         <mxCell id="-bjUIWqtexf8osAAXRmr-25" value="&lt;font color=&quot;#000000&quot;&gt;我应该定义一下如何使用这些图形, 这样能更清晰规范.&lt;/font&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#999999;strokeWidth=1;fillColor=#FFFFFF;fontColor=#6C767D;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;fontSize=14;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="80" y="-370" width="850" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-32" value="&lt;font color=&quot;#000000&quot;&gt;Base 是数据表的基类&lt;/font&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#999999;strokeWidth=1;fillColor=#FFFFFF;fontColor=#6C767D;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;fontSize=14;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="50" y="310" width="180" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
