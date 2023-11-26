@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-11-26T04:38:51.842Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="BGwg2VZIVQusPUCSWQ1Q" version="22.1.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-11-26T09:55:06.787Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0" etag="nAouqrAB746fgHmTv1wS" version="22.1.4" type="github">
   <diagram name="第 1 页" id="tyLjIMTKeEUc38fE4QXz">
     <mxGraphModel dx="1587" dy="1834" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -24,6 +24,11 @@
         </mxCell>
         <mxCell id="-bjUIWqtexf8osAAXRmr-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-bjUIWqtexf8osAAXRmr-8" target="-bjUIWqtexf8osAAXRmr-7">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-33" value="子类" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="-bjUIWqtexf8osAAXRmr-9">
+          <mxGeometry x="-0.2373" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="-bjUIWqtexf8osAAXRmr-8" value="KBService" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="680" y="-50" width="120" height="60" as="geometry" />
@@ -105,6 +110,9 @@
         </mxCell>
         <mxCell id="-bjUIWqtexf8osAAXRmr-32" value="&lt;font color=&quot;#000000&quot;&gt;Base 是数据表的基类&lt;/font&gt;" style="html=1;shadow=0;dashed=0;shape=mxgraph.bootstrap.rrect;rSize=5;strokeColor=#999999;strokeWidth=1;fillColor=#FFFFFF;fontColor=#6C767D;whiteSpace=wrap;align=left;verticalAlign=middle;spacingLeft=10;fontSize=14;spacing=10;" vertex="1" parent="1">
           <mxGeometry x="50" y="310" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="-bjUIWqtexf8osAAXRmr-34" value="KnowledgeFile" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="-40" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
