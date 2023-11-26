@@ -67,16 +67,19 @@ def list_kbs_from_folder():
 
 
 def list_files_from_folder(kb_name: str):
+    """
+    列出知识库目录下的所有文件
+    """
     doc_path = get_doc_path(kb_name)
     result = []
     for root, _, files in os.walk(doc_path):
         tail = os.path.basename(root).lower()
         if (tail.startswith("temp")
             or tail.startswith("tmp")
-            or tail.startswith(".")): # 跳过 [temp, tmp, .] 开头的文件夹
+            or tail.startswith(".")):  # 跳过 [temp, tmp, .] 开头的文件夹
             continue
         for file in files:
-            if file.startswith("~$"): # 跳过 ~$ 开头的文件
+            if file.startswith("~$"):  # 跳过 ~$ 开头的文件
                 continue
             path = Path(doc_path) / root / file
             result.append(path.resolve().relative_to(doc_path).as_posix())
@@ -96,6 +99,7 @@ LOADER_DICT = {"UnstructuredHTMLLoader": ['.html'],
                                           '.docx', '.epub', '.odt',
                                           '.ppt', '.pptx', '.tsv'],
                }
+# 当前支持的文件格式
 SUPPORTED_EXTS = [ext for sublist in LOADER_DICT.values() for ext in sublist]
 
 
@@ -156,6 +160,7 @@ langchain.document_loaders.CustomJSONLoader = CustomJSONLoader
 
 
 def get_LoaderClass(file_extension):
+    """获取扩展名对应的加载器"""
     for LoaderClass, extensions in LOADER_DICT.items():
         if file_extension in extensions:
             return LoaderClass
@@ -293,7 +298,7 @@ class KnowledgeFile:
         '''
         self.kb_name = knowledge_base_name
         self.filename = filename
-        self.ext = os.path.splitext(filename)[-1].lower()
+        self.ext = os.path.splitext(filename)[-1].lower()  # 文件扩展名
         if self.ext not in SUPPORTED_EXTS:
             raise ValueError(f"暂未支持的文件格式 {self.ext}")
         self.filepath = get_file_path(knowledge_base_name, filename)
@@ -303,6 +308,9 @@ class KnowledgeFile:
         self.text_splitter_name = TEXT_SPLITTER_NAME
 
     def file2docs(self, refresh: bool = False):
+        """
+        调用加载器加载文档
+        """
         if self.docs is None or refresh:
             logger.info(f"{self.document_loader_name} used for {self.filepath}")
             loader = get_loader(self.document_loader_name, self.filepath)
@@ -318,6 +326,9 @@ class KnowledgeFile:
             chunk_overlap: int = OVERLAP_SIZE,
             text_splitter: TextSplitter = None,
     ):
+        """
+        切割文档并返回文本
+        """
         docs = docs or self.file2docs(refresh=refresh)
         if not docs:
             return []
@@ -348,8 +359,12 @@ class KnowledgeFile:
             chunk_overlap: int = OVERLAP_SIZE,
             text_splitter: TextSplitter = None,
     ):
+        """
+        切割文档并返回文本
+        """
         if self.splited_docs is None or refresh:
             docs = self.file2docs()
+            # 分割文档
             self.splited_docs = self.docs2texts(docs=docs,
                                                 zh_title_enhance=zh_title_enhance,
                                                 refresh=refresh,
@@ -359,12 +374,15 @@ class KnowledgeFile:
         return self.splited_docs
 
     def file_exist(self):
+        """检查文件是否存在"""
         return os.path.isfile(self.filepath)
 
     def get_mtime(self):
+        """获取文件的修改时间"""
         return os.path.getmtime(self.filepath)
 
     def get_size(self):
+        """获取文件的大小"""
         return os.path.getsize(self.filepath)
 
 
@@ -381,6 +399,7 @@ def files2docs_in_thread(
     '''
 
     def file2docs(*, file: KnowledgeFile, **kwargs) -> Tuple[bool, Tuple[str, str, List[Document]]]:
+        """将单个文件转换成langchain Document"""
         try:
             return True, (file.kb_name, file.filename, file.file2text(**kwargs))
         except Exception as e:
@@ -396,6 +415,7 @@ def files2docs_in_thread(
     for i, file in enumerate(files):
         kwargs = {}
         try:
+            # 都转换成 KnowledgeFile
             if isinstance(file, tuple) and len(file) >= 2:
                 filename = file[0]
                 kb_name = file[1]
@@ -413,6 +433,7 @@ def files2docs_in_thread(
         except Exception as e:
             yield False, (kb_name, filename, str(e))
 
+    # 生成器的形式
     for result in run_in_thread_pool(func=file2docs, params=kwargs_list):
         yield result
 

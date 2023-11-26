@@ -78,6 +78,7 @@ def list_files_from_db(session, kb_name):
     return docs
 
 
+# 用了这个装饰器后, 第一个参数固定是 session
 @with_session
 def add_file_to_db(session,
                 kb_file: KnowledgeFile,
@@ -85,6 +86,9 @@ def add_file_to_db(session,
                 custom_docs: bool = False,
                 doc_infos: List[str] = [], # 形式：[{"id": str, "metadata": dict}, ...]
                 ):
+    """
+    将文件信息添加到数据库
+    """
     kb = session.query(KnowledgeBaseModel).filter_by(kb_name=kb_file.kb_name).first()
     if kb:
         # 如果已经存在该文件，则更新文件信息与版本号
@@ -96,6 +100,7 @@ def add_file_to_db(session,
         size = kb_file.get_size()
 
         if existing_file:
+            # 更新状态
             existing_file.file_mtime = mtime
             existing_file.file_size = size
             existing_file.docs_count = docs_count
@@ -111,10 +116,11 @@ def add_file_to_db(session,
                 text_splitter_name=kb_file.text_splitter_name or "SpacyTextSplitter",
                 file_mtime=mtime,
                 file_size=size,
-                docs_count = docs_count,
+                docs_count=docs_count,
                 custom_docs=custom_docs,
             )
             kb.file_count += 1
+            # 保存数据
             session.add(new_file)
         add_docs_to_db(kb_name=kb_file.kb_name, file_name=kb_file.filename, doc_infos=doc_infos)
     return True

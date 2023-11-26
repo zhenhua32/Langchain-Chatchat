@@ -17,7 +17,7 @@ class FaissKBService(KBService):
     vs_path: str
     kb_path: str
     vector_name: str = None  # 如果没设置, 就是嵌入模型的名字
- 
+
     def vs_type(self) -> str:
         return SupportedVSType.FAISS
 
@@ -81,13 +81,18 @@ class FaissKBService(KBService):
                    docs: List[Document],
                    **kwargs,
                    ) -> List[Dict]:
-        data = self._docs_to_embeddings(docs) # 将向量化单独出来可以减少向量库的锁定时间
+        """
+        添加文档
+        """
+        data = self._docs_to_embeddings(docs)  # 将向量化单独出来可以减少向量库的锁定时间
 
         with self.load_vector_store().acquire() as vs:
+            # 添加嵌入向量
             ids = vs.add_embeddings(text_embeddings=zip(data["texts"], data["embeddings"]),
                                     metadatas=data["metadatas"])
             if not kwargs.get("not_refresh_vs_cache"):
                 vs.save_local(self.vs_path)
+        # 这些是要放入数据库的信息
         doc_infos = [{"id": id, "metadata": doc.metadata} for id, doc in zip(ids, docs)]
         torch_gc()
         return doc_infos

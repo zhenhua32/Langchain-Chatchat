@@ -73,6 +73,7 @@ def import_from_db(
 
 
 def file_to_kbfile(kb_name: str, files: List[str]) -> List[KnowledgeFile]:
+    """包装成 KnowledgeFile"""
     kb_files = []
     for file in files:
         try:
@@ -95,6 +96,7 @@ def folder2db(
         zh_title_enhance: bool = ZH_TITLE_ENHANCE,
 ):
     """
+    将整个目录的文件信息添加到数据库, 并向量化添加到向量引擎中
     use existed files in local folder to populate database and/or vector store.
     set parameter `mode` to:
         recreate_vs: recreate all vector store and fill info to database using existed files in local folder
@@ -104,6 +106,7 @@ def folder2db(
     """
 
     def files2vs(kb_name: str, kb_files: List[KnowledgeFile]):
+        """文本向量化并添加到向量库"""
         for success, result in files2docs_in_thread(kb_files,
                                                     chunk_size=chunk_size,
                                                     chunk_overlap=chunk_overlap,

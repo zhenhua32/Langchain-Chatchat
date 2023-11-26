@@ -19,13 +19,13 @@ def embed_texts(
     TODO: 也许需要加入缓存机制，减少 token 消耗
     '''
     try:
-        if embed_model in list_embed_models(): # 使用本地Embeddings模型
+        if embed_model in list_embed_models():  # 使用本地Embeddings模型
             from server.utils import load_local_embeddings
 
             embeddings = load_local_embeddings(model=embed_model)
             return BaseResponse(data=embeddings.embed_documents(texts))
 
-        if embed_model in list_online_embed_models(): # 使用在线API
+        if embed_model in list_online_embed_models():  # 使用在线API
             config = get_model_worker_config(embed_model)
             worker_class = config.get("worker_class")
             worker = worker_class()
@@ -38,6 +38,7 @@ def embed_texts(
     except Exception as e:
         logger.error(e)
         return BaseResponse(code=500, msg=f"文本向量化过程中出现错误：{e}")
+
 
 def embed_texts_endpoint(
     texts: List[str] = Body(..., description="要嵌入的文本列表", examples=[["hello", "world"]]),

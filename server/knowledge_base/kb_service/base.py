@@ -61,6 +61,7 @@ class KBService(ABC):
         self.embed_model = embed_model
         self.kb_path = get_kb_path(self.kb_name)
         self.doc_path = get_doc_path(self.kb_name)
+        # 给子类初始化用的
         self.do_init()
 
     def __repr__(self) -> str:
@@ -120,7 +121,9 @@ class KBService(ABC):
 
         if docs:
             self.delete_doc(kb_file)
+            # 先调用子类的具体实现
             doc_infos = self.do_add_doc(docs, **kwargs)
+            # 然后再将这些信息保存到数据库中
             status = add_file_to_db(kb_file,
                                     custom_docs=custom_docs,
                                     docs_count=len(docs),

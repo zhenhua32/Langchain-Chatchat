@@ -196,6 +196,9 @@ class ChatMessage(BaseModel):
 
 
 def torch_gc():
+    """
+    清理 torch 的内存占用
+    """
     try:
         import torch
         if torch.cuda.is_available():
