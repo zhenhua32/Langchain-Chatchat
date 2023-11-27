@@ -411,6 +411,7 @@ def get_model_worker_config(model_name: str = None) -> dict:
         config["online_api"] = True
         if provider := config.get("provider"):
             try:
+                # 加载对应的 provider 类
                 config["worker_class"] = getattr(model_workers, provider)
             except Exception as e:
                 msg = f"在线模型 ‘{model_name}’ 的provider没有正确配置"
@@ -433,9 +434,13 @@ def get_all_model_worker_configs() -> dict:
 
 
 def fschat_controller_address() -> str:
+    """
+    获取 controller 地址
+    """
     from configs.server_config import FSCHAT_CONTROLLER
 
     host = FSCHAT_CONTROLLER["host"]
+    # 这里怎么又重置了, 那 host 配置的意义就没了
     if host == "0.0.0.0":
         host = "127.0.0.1"
     port = FSCHAT_CONTROLLER["port"]
@@ -443,6 +448,9 @@ def fschat_controller_address() -> str:
 
 
 def fschat_model_worker_address(model_name: str = LLM_MODELS[0]) -> str:
+    """
+    获取 model worker 地址
+    """
     if model := get_model_worker_config(model_name):  # TODO: depends fastchat
         host = model["host"]
         if host == "0.0.0.0":

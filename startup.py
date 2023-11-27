@@ -82,11 +82,14 @@ def create_model_worker_app(log_level: str = "INFO", **kwargs) -> FastAPI:
     fastchat.constants.LOGDIR = LOG_PATH
     import argparse
 
+    # 加载参数
     parser = argparse.ArgumentParser()
     args = parser.parse_args([])
 
     for k, v in kwargs.items():
         setattr(args, k, v)
+
+    # TODO: 我怎么没看到哪里设置了 langchain_model
     if worker_class := kwargs.get("langchain_model"): #Langchian支持的模型不用做操作
         from fastchat.serve.base_model_worker import app
         worker = ""
@@ -101,6 +104,7 @@ def create_model_worker_app(log_level: str = "INFO", **kwargs) -> FastAPI:
         sys.modules["fastchat.serve.base_model_worker"].logger.setLevel(log_level)
     # 本地模型
     else:
+        # 使用 vllm 的推理加速
         from configs.model_config import VLLM_MODEL_DICT
         if kwargs["model_names"][0] in VLLM_MODEL_DICT and args.infer_turbo == "vllm":
             import fastchat.serve.vllm_worker
@@ -368,6 +372,11 @@ def run_model_worker(
         q: mp.Queue = None,
         started_event: mp.Event = None,
 ):
+    """
+    启动本地模型
+
+    controller_address 默认是空的, 会用 fschat_controller_address() 获取
+    """
     import uvicorn
     from fastapi import Body
     import sys
@@ -378,17 +387,20 @@ def run_model_worker(
     host = kwargs.pop("host")
     port = kwargs.pop("port")
     kwargs["model_names"] = [model_name]
+    # 有两个地址
     kwargs["controller_address"] = controller_address or fschat_controller_address()
     kwargs["worker_address"] = fschat_model_worker_address(model_name)
     model_path = kwargs.get("model_path", "")
     kwargs["model_path"] = model_path
 
+    # 创建 app
     app = create_model_worker_app(log_level=log_level, **kwargs)
     _set_app_event(app, started_event)
     if log_level == "ERROR":
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
 
+    # 定义 app 的接口
     # add interface to release and load model
     @app.post("/release")
     def release_model(
@@ -396,15 +408,18 @@ def run_model_worker(
         keep_origin: bool = Body(False, description="不释放原模型，加载新模型")
     ) -> Dict:
         if keep_origin:
+            # 向队列发送消息, 启动新的模型
             if new_model_name:
                 q.put([model_name, "start", new_model_name])
         else:
+            # 向队列发送消息, 替换或者停止模型
             if new_model_name:
                 q.put([model_name, "replace", new_model_name])
             else:
                 q.put([model_name, "stop", None])
         return {"code": 200, "msg": "done"}
 
+    # 启动服务器
     uvicorn.run(app, host=host, port=port, log_level=log_level.lower())
 
 
