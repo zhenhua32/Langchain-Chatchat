@@ -510,7 +510,7 @@ def parse_args() -> argparse.ArgumentParser:
         "--model-name",
         type=str,
         nargs="+",
-        default=LLM_MODELS,
+        default=LLM_MODELS,  # 默认值是从配置文件中读取的
         help="specify model name for model worker. "
              "add addition names with space seperated to start multiple model workers.",
         dest="model_name",
@@ -689,6 +689,7 @@ async def start_main_server():
         )
         processes["openai_api"] = process
 
+    # 使用本地模型, 主要从这里开始看
     model_worker_started = []
     if args.model_worker:
         for model_name in args.model_name:
@@ -696,6 +697,7 @@ async def start_main_server():
             if not config.get("online_api"):
                 e = manager.Event()
                 model_worker_started.append(e)
+                # 实例化进程
                 process = Process(
                     target=run_model_worker,
                     name=f"model_worker - {model_name}",
@@ -708,6 +710,7 @@ async def start_main_server():
                 )
                 processes["model_worker"][model_name] = process
 
+    # 使用 API 的模型
     if args.api_worker:
         for model_name in args.model_name:
             config = get_model_worker_config(model_name)
@@ -728,6 +731,7 @@ async def start_main_server():
                 )
                 processes["online_api"][model_name] = process
 
+    # 启动 API 服务器
     api_started = manager.Event()
     if args.api:
         process = Process(
@@ -738,6 +742,7 @@ async def start_main_server():
         )
         processes["api"] = process
 
+    # 启动 WebUI 服务器
     webui_started = manager.Event()
     if args.webui:
         process = Process(
@@ -762,6 +767,7 @@ async def start_main_server():
                 p.start()
                 p.name = f"{p.name} ({p.pid})"
 
+            # 正式启动模型进程
             for n, p in processes.get("model_worker", {}).items():
                 p.start()
                 p.name = f"{p.name} ({p.pid})"
@@ -784,8 +790,10 @@ async def start_main_server():
                 p.name = f"{p.name} ({p.pid})"
                 webui_started.wait() # 等待webui.py启动完成
 
+            # 在服务启动后, 重新打印服务信息
             dump_server_info(after_start=True, args=args)
 
+            # 持续主进程, 通过队列接收消息
             while True:
                 cmd = queue.get() # 收到切换模型的消息
                 e = manager.Event()

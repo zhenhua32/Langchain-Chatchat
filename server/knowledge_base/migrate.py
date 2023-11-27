@@ -96,7 +96,7 @@ def folder2db(
         zh_title_enhance: bool = ZH_TITLE_ENHANCE,
 ):
     """
-    将整个目录的文件信息添加到数据库, 并向量化添加到向量引擎中
+    将整个目录的文件信息添加到数据库, 并向量化添加到向量引擎中.
     use existed files in local folder to populate database and/or vector store.
     set parameter `mode` to:
         recreate_vs: recreate all vector store and fill info to database using existed files in local folder

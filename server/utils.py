@@ -357,9 +357,13 @@ def list_config_llm_models() -> Dict[str, Dict]:
 
 
 def get_model_path(model_name: str, type: str = None) -> Optional[str]:
+    """
+    获取本地模型的路径
+    """
     if type in MODEL_PATH:
         paths = MODEL_PATH[type]
     else:
+        # 没有指定的时候全都要
         paths = {}
         for v in MODEL_PATH.values():
             paths.update(v)
@@ -371,15 +375,19 @@ def get_model_path(model_name: str, type: str = None) -> Optional[str]:
 
         root_path = Path(MODEL_ROOT_PATH)
         if root_path.is_dir():
+            # 第一种情况, 根目录 加 key
             path = root_path / model_name
             if path.is_dir():  # use key, {MODEL_ROOT_PATH}/chatglm-6b
                 return str(path)
+            # 第二种情况, 根目录 加 value
             path = root_path / path_str
             if path.is_dir():  # use value, {MODEL_ROOT_PATH}/THUDM/chatglm-6b-new
                 return str(path)
+            # 第三种情况, 根目录 加 value 的最后一级
             path = root_path / path_str.split("/")[-1]
             if path.is_dir():  # use value split by "/", {MODEL_ROOT_PATH}/chatglm-6b-new
                 return str(path)
+        # 第四种情况, 只使用 value
         return path_str  # THUDM/chatglm06b
 
 
@@ -394,6 +402,7 @@ def get_model_worker_config(model_name: str = None) -> dict:
     from configs.server_config import FSCHAT_MODEL_WORKERS
     from server import model_workers
 
+    # 优先级是倒序的, 越底下的优先级越高
     config = FSCHAT_MODEL_WORKERS.get("default", {}).copy()
     config.update(ONLINE_LLM_MODEL.get(model_name, {}).copy())
     config.update(FSCHAT_MODEL_WORKERS.get(model_name, {}).copy())
@@ -545,6 +554,9 @@ def set_httpx_config(
 
 
 def detect_device() -> Literal["cuda", "mps", "cpu"]:
+    """
+    检查可以用的 device
+    """
     try:
         import torch
         if torch.cuda.is_available():
@@ -557,6 +569,9 @@ def detect_device() -> Literal["cuda", "mps", "cpu"]:
 
 
 def llm_device(device: str = None) -> Literal["cuda", "mps", "cpu"]:
+    """
+    获取可用的 device
+    """
     device = device or LLM_DEVICE
     if device not in ["cuda", "mps", "cpu"]:
         device = detect_device()

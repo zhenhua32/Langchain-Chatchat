@@ -170,6 +170,7 @@ def get_LoaderClass(file_extension):
 def get_loader(loader_name: str, file_path_or_content: Union[str, bytes, io.StringIO, io.BytesIO]):
     '''
     根据loader_name和文件路径或内容返回文档加载器。
+    这个是处理文档的核心方法, 用于获取各种加载器, 如果有自定义的加载器, 也需要在这里注册
     '''
     try:
         if loader_name in ["RapidOCRPDFLoader", "RapidOCRLoader","FilteredCSVLoader"]:
@@ -192,6 +193,9 @@ def get_loader(loader_name: str, file_path_or_content: Union[str, bytes, io.Stri
             encode_detect = chardet.detect(struct_file.read())
         if encode_detect is None:
             encode_detect = {"encoding": "utf-8"}
+
+        # 大多数情况下, 编码都会识别错误, 所以我决定只用 utf-8
+        encode_detect = {"encoding": "utf-8"}
 
         loader = DocumentLoader(file_path_or_content, encoding=encode_detect["encoding"])
         ## TODO：支持更多的自定义CSV读取逻辑
