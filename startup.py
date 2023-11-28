@@ -152,6 +152,7 @@ def create_model_worker_app(log_level: str = "INFO", **kwargs) -> FastAPI:
             for k, v in kwargs.items():
                 setattr(args, k, v)
 
+            # 初始化 engine
             engine_args = AsyncEngineArgs.from_cli_args(args)
             engine = AsyncLLMEngine.from_engine_args(engine_args)
 
@@ -166,11 +167,13 @@ def create_model_worker_app(log_level: str = "INFO", **kwargs) -> FastAPI:
                         llm_engine =  engine,
                         conv_template = args.conv_template,
                         )
+            # 直接更改模块的变量
             sys.modules["fastchat.serve.vllm_worker"].engine = engine
             sys.modules["fastchat.serve.vllm_worker"].worker = worker
             sys.modules["fastchat.serve.vllm_worker"].logger.setLevel(log_level)
 
         else:
+            # 常规模式
             from fastchat.serve.model_worker import app, GptqConfig, AWQConfig, ModelWorker, worker_id
 
             args.gpus = "0" # GPU的编号,如果有多个GPU，可以设置为"0,1,2,3"
@@ -387,13 +390,14 @@ def run_model_worker(
     host = kwargs.pop("host")
     port = kwargs.pop("port")
     kwargs["model_names"] = [model_name]
-    # 有两个地址
+    # 有两个地址 controller_address 默认是 127.0.0.1:20001
+    # worker_address 默认是 127.0.0.1:20002
     kwargs["controller_address"] = controller_address or fschat_controller_address()
     kwargs["worker_address"] = fschat_model_worker_address(model_name)
     model_path = kwargs.get("model_path", "")
     kwargs["model_path"] = model_path
 
-    # 创建 app
+    # 创建 app. 这个 app 是 FastAPI 的实例
     app = create_model_worker_app(log_level=log_level, **kwargs)
     _set_app_event(app, started_event)
     if log_level == "ERROR":
