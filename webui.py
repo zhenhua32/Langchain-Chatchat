@@ -9,6 +9,7 @@ from configs import VERSION
 from server.utils import api_address
 
 
+# 初始化 api 请求器
 api = ApiRequest(base_url=api_address())
 
 if __name__ == "__main__":
@@ -25,6 +26,7 @@ if __name__ == "__main__":
         }
     )
 
+    # 设置页面
     pages = {
         "对话": {
             "icon": "chat",
@@ -36,6 +38,7 @@ if __name__ == "__main__":
         },
     }
 
+    # 设置侧边栏
     with st.sidebar:
         st.image(
             os.path.join(
@@ -48,9 +51,11 @@ if __name__ == "__main__":
             f"""<p align="right">当前版本：{VERSION}</p>""",
             unsafe_allow_html=True,
         )
+        # 两个页面选项
         options = list(pages)
         icons = [x["icon"] for x in pages.values()]
 
+        # 默认选中第一个页面
         default_index = 0
         selected_page = option_menu(
             "",
@@ -61,4 +66,5 @@ if __name__ == "__main__":
         )
 
     if selected_page in pages:
+        # 启动函数
         pages[selected_page]["func"](api=api, is_lite=is_lite)

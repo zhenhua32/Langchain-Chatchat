@@ -461,6 +461,9 @@ def run_api_server(started_event: mp.Event = None, run_mode: str = None):
 
 
 def run_webui(started_event: mp.Event = None, run_mode: str = None):
+    """
+    启动 webui 服务器
+    """
     from server.utils import set_httpx_config
     set_httpx_config()
 
@@ -482,6 +485,7 @@ def run_webui(started_event: mp.Event = None, run_mode: str = None):
         ]
     p = subprocess.Popen(cmd)
     started_event.set()
+    # 一直开着进程就行
     p.wait()
 
 
