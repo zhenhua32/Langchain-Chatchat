@@ -45,6 +45,9 @@ def create_controller_app(
         dispatch_method: str,
         log_level: str = "INFO",
 ) -> FastAPI:
+    """
+    创建一个 fastchat 的实例
+    """
     import fastchat.constants
     fastchat.constants.LOGDIR = LOG_PATH
     from fastchat.serve.controller import app, Controller, logger
@@ -285,6 +288,9 @@ def _set_app_event(app: FastAPI, started_event: mp.Event = None):
 
 
 def run_controller(log_level: str = "INFO", started_event: mp.Event = None):
+    """
+    启动控制器, 里面主要注册了 /release_worker 的接口
+    """
     import uvicorn
     import httpx
     from fastapi import Body
@@ -307,6 +313,9 @@ def run_controller(log_level: str = "INFO", started_event: mp.Event = None):
             new_model_name: str = Body(None, description="释放后加载该模型"),
             keep_origin: bool = Body(False, description="不释放原模型，加载新模型")
     ) -> Dict:
+        """
+        停止或者切换模型
+        """
         available_models = app._controller.list_models()
         if new_model_name in available_models:
             msg = f"要切换的LLM模型 {new_model_name} 已经存在"
@@ -330,6 +339,7 @@ def run_controller(log_level: str = "INFO", started_event: mp.Event = None):
             return {"code": 500, "msg": msg}
 
         with get_httpx_client() as client:
+            # 发送请求对应的 release 方法
             r = client.post(worker_address + "/release",
                         json={"new_model_name": new_model_name, "keep_origin": keep_origin})
             if r.status_code != 200:
@@ -337,10 +347,12 @@ def run_controller(log_level: str = "INFO", started_event: mp.Event = None):
                 logger.error(msg)
                 return {"code": 500, "msg": msg}
 
+        # 加载新模型或者停止模型
         if new_model_name:
             timer = HTTPX_DEFAULT_TIMEOUT  # wait for new model_worker register
             while timer > 0:
                 models = app._controller.list_models()
+                # 检查新模型是否已经可用
                 if new_model_name in models:
                     break
                 time.sleep(1)
@@ -365,6 +377,7 @@ def run_controller(log_level: str = "INFO", started_event: mp.Event = None):
         sys.stdout = sys.__stdout__
         sys.stderr = sys.__stderr__
 
+    # 启动服务
     uvicorn.run(app, host=host, port=port, log_level=log_level.lower())
 
 
@@ -695,6 +708,7 @@ async def start_main_server():
     else:
         log_level = "INFO"
 
+    # 启动控制器, 这个看来是必要的, 需要先看看
     controller_started = manager.Event()
     if args.openai_api:
         process = Process(
