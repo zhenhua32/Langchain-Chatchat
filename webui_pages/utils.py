@@ -49,6 +49,7 @@ class ApiRequest:
     @property
     def client(self):
         if self._client is None or self._client.is_closed:
+            # 初始化客户端
             self._client = get_httpx_client(base_url=self.base_url,
                                             use_async=self._use_async,
                                             timeout=self.timeout)
@@ -62,6 +63,9 @@ class ApiRequest:
         stream: bool = False,
         **kwargs: Any,
     ) -> Union[httpx.Response, Iterator[httpx.Response], None]:
+        """
+        调用 get 方法
+        """
         while retry > 0:
             try:
                 if stream:
@@ -83,6 +87,9 @@ class ApiRequest:
         stream: bool = False,
         **kwargs: Any
     ) -> Union[httpx.Response, Iterator[httpx.Response], None]:
+        """
+        调用 post 方法
+        """
         while retry > 0:
             try:
                 if stream:
@@ -104,6 +111,9 @@ class ApiRequest:
         stream: bool = False,
         **kwargs: Any
     ) -> Union[httpx.Response, Iterator[httpx.Response], None]:
+        """
+        调用 delete 方法
+        """
         while retry > 0:
             try:
                 if stream:

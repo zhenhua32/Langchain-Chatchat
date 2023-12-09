@@ -661,6 +661,7 @@ def get_httpx_client(
     # construct Client
     kwargs.update(timeout=timeout, proxies=default_proxies)
     print(kwargs)
+    # 原来使用的是 httpx 库
     if use_async:
         return httpx.AsyncClient(**kwargs)
     else:
