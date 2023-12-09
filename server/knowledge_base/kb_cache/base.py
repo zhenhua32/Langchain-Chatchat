@@ -1,4 +1,5 @@
 from langchain.embeddings.base import Embeddings
+from langchain.vectorstores.faiss import FAISS
 import threading
 from configs import (EMBEDDING_MODEL, CHUNK_SIZE,
                     logger, log_verbose)
@@ -30,7 +31,7 @@ class ThreadSafeObject:
         return self._key
 
     @contextmanager
-    def acquire(self, owner: str = "", msg: str = ""):
+    def acquire(self, owner: str = "", msg: str = "") -> FAISS:
         """
         获取 self._obj, 应该在 with 语句中使用
         """

@@ -95,14 +95,14 @@ $ pip install -r requirements_webui.txt
 
 如需在本地或离线环境下运行本项目，需要首先将项目所需的模型下载至本地，通常开源 LLM 与 Embedding 模型可以从 [HuggingFace](https://huggingface.co/models) 下载。
 
-以本项目中默认使用的 LLM 模型 [THUDM/ChatGLM2-6B](https://huggingface.co/THUDM/chatglm2-6b) 与 Embedding 模型 [moka-ai/m3e-base](https://huggingface.co/moka-ai/m3e-base) 为例：
+以本项目中默认使用的 LLM 模型 [THUDM/ChatGLM3-6B](https://huggingface.co/THUDM/chatglm3-6b) 与 Embedding 模型 [BAAI/bge-large-zh](https://huggingface.co/BAAI/bge-large-zh) 为例：
 
 下载模型需要先[安装 Git LFS](https://docs.github.com/zh/repositories/working-with-files/managing-large-files/installing-git-large-file-storage)，然后运行
 
 ```Shell
 $ git lfs install
-$ git clone https://huggingface.co/THUDM/chatglm2-6b
-$ git clone https://huggingface.co/moka-ai/m3e-base
+$ git clone https://huggingface.co/THUDM/chatglm3-6b
+$ git clone https://huggingface.co/BAAI/bge-large-zh
 ```
 ### 3. 初始化知识库和配置文件
 
@@ -151,7 +151,7 @@ $ python startup.py -a
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white "langchain-chatglm")](https://t.me/+RjliQ3jnJ1YyN2E9)
 
 ### 项目交流群
-<img src="img/qr_code_75.jpg" alt="二维码" width="300" />
+<img src="img/qr_code_78.jpg" alt="二维码" width="300" />
 
 🎉 Langchain-Chatchat 项目微信交流群，如果你也对本项目感兴趣，欢迎加入群聊参与讨论交流。
 
