@@ -5,14 +5,13 @@ from server.utils import BaseResponse, get_model_worker_config, list_embed_model
 from fastapi import Body
 from typing import Dict, List
 
-
 online_embed_models = list_online_embed_models()
 
 
 def embed_texts(
-    texts: List[str],
-    embed_model: str = EMBEDDING_MODEL,
-    to_query: bool = False,
+        texts: List[str],
+        embed_model: str = EMBEDDING_MODEL,
+        to_query: bool = False,
 ) -> BaseResponse:
     '''
     对文本进行向量化。返回数据格式：BaseResponse(data=List[List[float]])
@@ -28,9 +27,10 @@ def embed_texts(
         if embed_model in list_online_embed_models():  # 使用在线API
             config = get_model_worker_config(embed_model)
             worker_class = config.get("worker_class")
+            embed_model = config.get("embed_model")
             worker = worker_class()
             if worker_class.can_embedding():
-                params = ApiEmbeddingsParams(texts=texts, to_query=to_query)
+                params = ApiEmbeddingsParams(texts=texts, to_query=to_query, embed_model=embed_model)
                 resp = worker.do_embeddings(params)
                 return BaseResponse(**resp)
 
@@ -41,9 +41,10 @@ def embed_texts(
 
 
 def embed_texts_endpoint(
-    texts: List[str] = Body(..., description="要嵌入的文本列表", examples=[["hello", "world"]]),
-    embed_model: str = Body(EMBEDDING_MODEL, description=f"使用的嵌入模型，除了本地部署的Embedding模型，也支持在线API({online_embed_models})提供的嵌入服务。"),
-    to_query: bool = Body(False, description="向量是否用于查询。有些模型如Minimax对存储/查询的向量进行了区分优化。"),
+        texts: List[str] = Body(..., description="要嵌入的文本列表", examples=[["hello", "world"]]),
+        embed_model: str = Body(EMBEDDING_MODEL,
+                                description=f"使用的嵌入模型，除了本地部署的Embedding模型，也支持在线API({online_embed_models})提供的嵌入服务。"),
+        to_query: bool = Body(False, description="向量是否用于查询。有些模型如Minimax对存储/查询的向量进行了区分优化。"),
 ) -> BaseResponse:
     '''
     对文本进行向量化，返回 BaseResponse(data=List[List[float]])
@@ -52,9 +53,9 @@ def embed_texts_endpoint(
 
 
 def embed_documents(
-    docs: List[Document],
-    embed_model: str = EMBEDDING_MODEL,
-    to_query: bool = False,
+        docs: List[Document],
+        embed_model: str = EMBEDDING_MODEL,
+        to_query: bool = False,
 ) -> Dict:
     """
     将 List[Document] 向量化，转化为 VectorStore.add_embeddings 可以接受的参数
