@@ -104,8 +104,9 @@ def list_files_from_folder(kb_name: str):
 
 LOADER_DICT = {"UnstructuredHTMLLoader": ['.html'],
                "UnstructuredMarkdownLoader": ['.md'],
-               "JSONLoader": [".json"],
-               "JSONLinesLoader": [".jsonl"],
+            # json 不支持, 需要自己写, 默认的实现依赖 jq
+            #    "JSONLoader": [".json"],
+            #    "JSONLinesLoader": [".jsonl"],
                "CSVLoader": [".csv"],
                # "FilteredCSVLoader": [".csv"], # 需要自己指定，目前还没有支持
                "RapidOCRPDFLoader": [".pdf"],
